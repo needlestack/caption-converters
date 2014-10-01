@@ -10,6 +10,7 @@ if (not @ARGV) {
     print STDERR "usage: $0 [-f] file ...\n";
     print STDERR "       creates SRT from Youtube timed text XML\n";
     print STDERR "       -f overwrites existing files\n";
+    exit;
 }
 
 foreach my $file (@ARGV) {
@@ -93,6 +94,9 @@ ytt2srt.pl - convert Youtube timed text XML to SRT format
 =head1 USAGE
 
 Provide a list of Youtube timed text files, and .srt files are created.
+
+If the -f option is specified, the script will overwrite any existing
+.srt files.
 
 =head1 AUTHOR
 

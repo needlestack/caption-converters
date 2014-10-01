@@ -14,7 +14,7 @@ if (not @ARGV) {
 foreach my $file (@ARGV) {
 
     if (not open FILE, "+<$file") {
-        warn "Opening $file $!";
+        warn "Couldn't open $file: $!";
         next;
     }
 
@@ -23,10 +23,10 @@ foreach my $file (@ARGV) {
         $output .= encode_utf8(decode_entities($line));
     }
 
-    seek(FILE, 0, 0) or die "Seeking $file: $!";
-    print(FILE $output) or die "Writing $file: $!";
-    truncate(FILE, tell(FILE)) or die "Truncating $file: $!";
-    close(FILE) or die "Closing $file: $!";
+    seek(FILE, 0, 0) or die "Couldn't seek $file: $!";
+    print(FILE $output) or die "Couldn't write $file: $!";
+    truncate(FILE, tell(FILE)) or die "Couldn't truncate $file: $!";
+    close(FILE) or die "Couldn't close $file: $!";
 
 }
 
@@ -40,9 +40,13 @@ html2utf8.pl - convert HTML entities to UTF-8
 
 =head1 USAGE
 
-Provide a list of HTML files, and it converts any HTML character
+Provide a list of files, and it converts any HTML character
 entities it finds (e.g. &#1104;) into their corresponding UTF-8
 characters (e.g. ѐ). The original files are modified.
+
+This is mainly useful for VTT files which often contain HTML
+entities, but need to be in UTF-8 to display properly as video
+subtitles.
 
 =head1 AUTHOR
 

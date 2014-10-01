@@ -10,6 +10,7 @@ if (not @ARGV) {
     print STDERR "usage: $0 [-f] file ...\n";
     print STDERR "       creates WebVTT from Youtube timed text XML\n";
     print STDERR "       -f overwrites existing files\n";
+    exit;
 }
 
 foreach my $file (@ARGV) {
@@ -93,6 +94,9 @@ ytt2vtt.pl - convert Youtube timed text XML to WebVTT format
 =head1 USAGE
 
 Provide a list of Youtube timed text files, and .vtt files are created.
+
+If the -f option is specified, the script will overwrite any existing
+.vtt files.
 
 =head1 AUTHOR
 
