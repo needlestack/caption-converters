@@ -2,7 +2,8 @@ Caption Converters
 ==================
 
 Command line scripts for converting common subtitle / caption formats.
-Currently reads Youtube timed text and outputs either .srt or .vtt files.
+Currently reads Youtube timed text (as delivered by their API)
+and outputs either .srt or .vtt files.
 
 ## NAME
 
