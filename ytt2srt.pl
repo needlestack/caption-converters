@@ -8,7 +8,7 @@ my $force = shift @ARGV if $ARGV[0] eq "-f";
 
 if (not @ARGV) {
     print STDERR "usage: $0 [-f] file ...\n";
-    print STDERR "       creates SRT from Youtube timed text XML\n";
+    print STDERR "       creates .srt subtitle files from Youtube timed text XML\n";
     print STDERR "       -f overwrites existing files\n";
     exit;
 }
@@ -85,7 +85,7 @@ sub converttime {
 
 =head1 NAME
 
-ytt2srt.pl - convert Youtube timed text XML to SRT format
+ytt2srt.pl - convert Youtube timed text XML to .srt format
 
 =head1 SYNOPSIS
 

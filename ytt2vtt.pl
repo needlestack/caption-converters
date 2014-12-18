@@ -3,6 +3,7 @@ use strict;
 use warnings;
 use XML::Simple;
 use Data::Dumper;
+use HTML::Entities;
 
 my $force = shift @ARGV if $ARGV[0] eq "-f";
 
@@ -46,19 +47,40 @@ foreach my $file (@ARGV) {
         next;
     }
 
+    # set the encoding
+    binmode FILE, ":encoding(UTF-8)";
+
     # print the header
+    print FILE chr(65279); # UTF-8 BOM, required for proper rendering
     print FILE "WEBVTT\n\n";
 
     # convert the contents line-by-line
+    my $baddur = 0;
     foreach my $cap (@{ $data->{text} }) {
+
+        if (not defined $cap->{dur}) {
+            # Some caption files are bad - they have all
+            # the text at a start time of 0 with no
+            # duration. I'm guessing this means someone
+            # wrote the text out, but they haven't timed it yet.
+            $cap->{dur} = 0;
+            ++$baddur;
+        }
 
         my $start  = converttime($cap->{start});
         my $finish = converttime($cap->{start}+$cap->{dur});
         $cap->{content} = "" if not defined $cap->{content};
 
+        # convert html entities (from ytt/xml) into unicode
+        $cap->{content} = decode_entities($cap->{content});
+
         print FILE "$start --> $finish\n";
         print FILE "$cap->{content}\n\n";
 
+    }
+
+    if ($baddur > 0) {
+        warn "Possibly bad ytt ($baddur captions with no duration): $file\n";
     }
 
     # flush

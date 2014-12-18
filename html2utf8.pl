@@ -18,7 +18,10 @@ foreach my $file (@ARGV) {
         next;
     }
 
-    my $output = "";
+    # set the encoding
+    binmode FILE, ":encoding(UTF-8)";
+
+    my $output = chr(65279); # UTF-8 BOM, required for proper rendering
     while (my $line = <FILE>) {
         $output .= encode_utf8(decode_entities($line));
     }
