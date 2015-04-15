@@ -5,7 +5,7 @@ use Data::Dumper;
 #use HTML::Entities;
 
 my $force = "";
-if ($ARGV[0]||"" eq "-f") {
+if (($ARGV[0]||"") eq "-f") {
     $force = 1;
     shift @ARGV;
 }
