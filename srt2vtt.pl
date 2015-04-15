@@ -4,10 +4,16 @@ use warnings;
 use Data::Dumper;
 #use HTML::Entities;
 
-my $force = shift @ARGV if $ARGV[0] eq "-f";
+my $force = "";
+if ($ARGV[0]||"" eq "-f") {
+    $force = 1;
+    shift @ARGV;
+}
 
 if (not @ARGV) {
-    print STDERR "usage: $0 [-f] file ...\n";
+    $0 =~ /([^\/]+)$/; # remove path from script name
+    my $script = $1;
+    print STDERR "usage: $script [-f] file ...\n";
     print STDERR "       creates WebVTT from an .srt subtitle file\n";
     print STDERR "       -f overwrites existing files\n";
     exit;
